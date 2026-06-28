@@ -1,0 +1,73 @@
+"""YAML configuration example"""
+
+# Project Configuration
+project:
+  name: IPDRS
+  version: "1.0.0"
+  description: Intrusion Prevention and Detection Research System
+
+data:
+  raw_dir: data/UNSW‑NB15
+  processed_dir: data/processed
+  test_split: 0.2
+
+preprocessing:
+  scaling: standard_scaler
+  missing_threshold: 0.7
+  random_state: 42
+
+augmentation:
+  gan:
+    latent_dim: 100
+    epochs: 5000
+    batch_size: 64
+    multiplier: 1.5
+    adaptive_clipping: true
+  
+  smote:
+    ratio: 0.8
+    k_neighbors: 5
+  
+  strategy: gan_and_smote
+
+models:
+  random_forest:
+    n_estimators: 200
+    max_depth: 15
+    class_weight: balanced
+    
+  xgboost:
+    n_estimators: 200
+    max_depth: 6
+    learning_rate: 0.05
+    
+  lstm:
+    units: 64
+    dropout: 0.3
+    epochs: 50
+    
+  cnn:
+    epochs: 50
+    batch_size: 32
+
+evaluation:
+  cv_splits: 5
+  stratified: true
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_weighted
+    - f1_macro
+    - roc_auc
+
+paths:
+  models: trained_models
+  results: results
+  logs: results/logs
+  tensorboard: tensorboard_logs
+
+ips:
+  alert_threshold: 0.7
+  buffer_size: 1000
+  log_alerts: true
